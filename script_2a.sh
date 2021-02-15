@@ -6,17 +6,14 @@ then
 	PERM1=$(stat --printf=”%a”  $1)
 	PERM2=$(stat --printf=”%a”  $2)
 
-	echo $PERM1
-fi
+	if [ "$PERM1" = "$PERM2" ]
+	then
+		echo Both the files have same permissions: $(stat --printf="%A" $1)
+	else
+		echo The given files have different permissions
+	fi
+else
+	echo "This script is programmed to use two files in order to compare their permissions"
 
-#	if [ $PERM1 == $PERM2 ]
-#	then
-#		echo “Both the files have same permissions: $(stat -printf="%A" $1)
-#	else
-#		echo “The given files have different permissions”
-#	fi
-#else
-#	echo "This script is programmed to use two files in order to compare their permissions"
-#
-#fi
+fi
 
