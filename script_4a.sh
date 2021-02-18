@@ -1,4 +1,5 @@
 #!/bin/bash
+
 if [ $# -eq 0 ]
 then
 	echo "This script requires atleast one filename as arguement"
