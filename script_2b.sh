@@ -1,13 +1,17 @@
 #!/bin/bash
 
-if [ $# -ne 1 ]
+if [ $# -eq 0 ]
 then
-	echo "Run this script with only one username as arguement!"
+	echo "Run this script with one or more  username(s) as arguement!"
 else
-	if [ $(grep $1 /etc/passwd) ]
-	then
-		eval "echo ~$1"
-	else
-		echo "user does not exsist"
-	fi
+	for i in $*
+	do
+		if [ $(grep $i /etc/passwd) ]
+		then
+			echo "Home directory for $i: "
+			eval "echo ~$i"
+		else
+			echo "user does not exsist"
+		fi
+	done
 fi
