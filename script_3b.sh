@@ -13,10 +13,11 @@ do
 	then
 		clear
 		echo -e "\033[31mTerminal Locked !\033[0m"
-		# Trapping CTRL+C
-		trap '' 2
-		# Setting number of CTRL+D presses required to consider EOF signal
-		export IGNOREEOF=69
+		stty intr ''
+		stty eof ''
+		stty susp ''
+		stty stop ''
+		stty kill ''
 		echo "To unlock, Enter Password: "
 		passFirst=""
 		until [ "$passFirst" = "$passConfirm" ]
