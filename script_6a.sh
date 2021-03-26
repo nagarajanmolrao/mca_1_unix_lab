@@ -1,13 +1,13 @@
 #!/bin/bash
-
-lof=$(ls -l | grep "^-" | tr -s " " |sort -k 9 -t " " | cut -f 9 -d " ")
-mkdir ~/patternMatch
-for i in $lof
+if [ $# -eq 0 ]
+then
+	echo “No arguments”
+	exit
+fi
+for i in $*
 do
-	if [ $(grep $1 $i) ]
-	then
-		printf "Filename: %s\n" $i
-		cat $i
-		cp -v $i ~/patternMatch/$i
-	fi
+	echo grep –riew $* ~/
+	ls $*
+	cat $* 
+       	cp $* ~/mydir
 done
