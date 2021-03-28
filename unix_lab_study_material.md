@@ -20,7 +20,7 @@ fi
 ```
 
 ######COMMAND DETAILS:
-> *find* : find command searches for a file in directory hierarchy.
+> *find* : find command searches for a file in directory hierarchy
 			 >> %k: amount of disk space used by the file in 1KB Blocks  
 			 >> %p: file's name
 
@@ -209,4 +209,58 @@ fi
 > *mv* : move or rename files
 
 **4b. Write a shell script that displays all the links to a file specified as the first argument to the script. The second argument, which is optional, can be used to specify in which the search is to begin. If this second argument is not present, the search is to begin in the current working directory. In either case, the starting directory as well as its subdirectories at all levels must be searched. The script need not include error checking.**
+
+```
+if [ $# -eq 0 ]
+then
+	printf "Invalid arguments"
+else
+	if [ $# -eq 1 ]
+	then 
+		dir=`pwd`
+	elif [ $# -eq 2 ] 
+	then
+		dir=$2 
+	fi
+
+if [ -f $1 ] 
+then
+	inode=`ls -i $1 | cut -d " " -f 1`
+	printf "hard link of $1 are:\n" 
+	find $dir -inum $inode
+	find $dir -type l -ls |tr -s " " |grep $1 |cut -d " " -f 11 > soft 
+	s=`wc -l < soft`
+	if [ $S -eq 0 ] 
+	then
+		echo “There is no soft links” 
+	else
+		echo “soft links of $1 are” 
+		cat soft
+	fi
+else
+	printf "file doesn't exist"
+fi
+fi
+```
+
+######COMMAND DETAILS:
+> *pwd* : prints working directory   
+> *ls* : list directory contents   
+			>> -i : print the index number of each file  
+> *cut* : removes sections from each line of the file
+			>> -d : delimiting character at which the line has to be split   
+			>> -f : print n or nth field(s) in the result after cut  
+> *find* : find command searches for a file in directory hierarchy  
+ 			>> -inum : looks for file(s) with index number passwd as argument   
+ 			>> -type : look for file(s) of specific type ("l" for Symbolic link)  
+ 			>> -ls : list the files found in output similar to ```ls -dils```  
+> *tr* : translate or delete characters   
+			>> -s : replace each sequence of the repeated character specified with songle occurrence of that character   
+> *grep* : print lines that match a given pattern  
+> *wc* : print newline, word, and byte counts for each file   
+			>> -l : print newline counts
+
+**5a. Write a shell script that accepts filename as argument and display its creation
+time if file exist and if does not send output error message.**
+
 
