@@ -132,3 +132,43 @@ fi
 
 **3b. Write a shell script to implement terminal locking (Similar to the lock command). It should prompt for the user for a password. After accepting the password entered by the user, it must prompt again for the matching password as confirmation and if match occurs, it must lock the keyword until a matching password is entered again by the user. Note the Script must be written to disregard BREAK, control-D. No time limit need be implemented for the lock duration.**
 
+```
+while true
+do
+	clear
+	echo "**Password entered is not visible for security reasons**"
+	echo "Enter Password: "
+	read -s passFirst
+	echo "Re-enter Password: "
+	read -s passConfirm
+
+	if [ "$passFirst" = "$passConfirm" ]
+	then
+		clear
+		echo -e "\033[31mTerminal Locked !\033[0m"
+		stty intr ''
+		stty eof ''
+		stty susp ''
+		stty stop ''
+		stty kill ''
+		echo "To unlock, Enter Password: "
+		passFirst=""
+		until [ "$passFirst" = "$passConfirm" ]
+		do
+			read -s passFirst
+		done
+		echo -e "\033[32mTerminal Unlocked !\033[0m"
+		exit
+	else
+		echo "Password Mismatch !"
+		sleep 3
+	fi
+done
+```
+
+######COMMAND DETAILS:
+> *read* : read from a file descriptor  
+			>> -s : does not echo input coming from a terminal
+
+> *stty* : change and print terminal line settings
+			>> 
