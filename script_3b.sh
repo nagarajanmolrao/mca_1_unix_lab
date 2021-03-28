@@ -24,6 +24,11 @@ do
 		do
 			read -s passFirst
 		done
+		stty intr '^C'
+		stty eof '^D'
+		stty susp '^Z'
+		stty stop '^S'
+		stty kill '^U'
 		echo -e "\033[32mTerminal Unlocked !\033[0m"
 		exit
 	else
