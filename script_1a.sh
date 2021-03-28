@@ -4,7 +4,7 @@ if [ $# -eq 1 ]
 then
 	if [ -e $1 ]
 	then
-		echo "Larget File in the directory: $(find $1 -printf '%k %p\n' | sort -nr | head -n 1 | cut -c 4- | sed 's,'"$1"', ,g')"
+		echo "Larget File in the directory: $(find $1 -printf '%k %p\n' | sort -nr | head -n 1 | cut -d " " -f 2)"
 
 	else
 		echo "Path does not exist! Please check the path."
