@@ -314,5 +314,57 @@ fi
 
 > *sed* : stream editor for filtering and transforming text   
 			>> s/regexp/replacement/ : search and attempt to match the given regular expression against the pattern space and If search is successful, replace the portion matched with the replacement.    
-			>> \b : matches for complete word 
+			>> \b : matches for complete word
+
+**6a. Write s a shell script to find a file/s that matches a pattern given as command line argument in the home directory, display the contents of the file and copy the file into the directory ~/mydir.**
+
+```
+if [ $# -eq 0 ]
+then
+	echo “No arguments”
+	exit
+fi
+for i in $*
+do
+	echo grep –riew $* ~/
+	ls $*
+	cat $* 
+       	cp $* ~/mydir
+done
+```
+
+######COMMAND DETAILS:
+> *grep* : print lines that match a given pattern  
+			>> -r : Read  all  files  under  each  directory, recursively, following symbolic links only if they are on the command line   
+			>> -i : Ignore case distinctions in patterns and input data
+			>> -e : Use the argument as regexp pattern
+			>> -w : Select only those lines containing matches that form whole words.
+
+**6b. Write a shell script to list all the files in a directory whose filename is at least 10 characters. (use expr command to check the length).**
+
+```
+currentDir=$(pwd)
+listOfFiles=$(ls -l "$currentDir" | awk '{print $9}')
+echo "Current Directory: $currentDir"
+echo "All files whose filename is at least 10 characters: "
+for f in $listOfFiles
+do
+	if [ $(expr length "$f") -gt 10 ]
+	then
+		echo $f
+	fi
+done
+```
+
+######COMMMAND DETAILS:
+> *ls* : list directory contents   
+			>> -l : use a long listing format
+
+> *awk* : pattern scanning and processing language
+
+> *expr* : evaluate expressions
+			>> length : computes the length of the argument
+
+**7a.Write a shell script that gets executed and displays the message either “Good Morning” or “Good Afternoon” or “Good Evening” depending upon time at which the user logs in.**
+
 

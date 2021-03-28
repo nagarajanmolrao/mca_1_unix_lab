@@ -53,14 +53,13 @@ else
 fi
 </code></pre><h6 id="command-details">COMMAND DETAILS:</h6>
 <blockquote>
-<p><em>find</em> : find command searches for a file in directory hierarchy.</p>
+<p><em>find</em> : find command searches for a file in directory hierarchy</p>
 <blockquote>
 <p>%k: amount of disk space used by the file in 1KB Blocks<br>%p: file&#39;s name</p>
 </blockquote>
 <p><em>sort</em> : sorts the lines of text files</p>
 <blockquote>
-<p>-n : numeric sort
--r : reverse sort</p>
+<p>-n : numeric sort<br>-r : reverse sort</p>
 </blockquote>
 <p><em>head</em> : output from part of the file</p>
 <blockquote>
@@ -68,8 +67,7 @@ fi
 </blockquote>
 <p><em>cut</em> : removes sections from each line of the file</p>
 <blockquote>
-<p>-d : delimiting character at which the line has to be split
--f : print n or nth field(s) in the result after cut</p>
+<p>-d : delimiting character at which the line has to be split<br>-f : print n or nth field(s) in the result after cut</p>
 </blockquote>
 </blockquote>
 <p><strong>1b. Write a shell script that accepts a path name and creates all the components in that path name as directories. For example, if the script is named as mpc, then the command mpc a/b/c/d should create sub-directories a, a/b, a/b/c, a/b/c/d</strong></p>
@@ -80,9 +78,12 @@ else
     echo &quot;This Script is only programmed to take one arguement as an input!&quot;
 fi
 </code></pre><h6 id="command-details">COMMAND DETAILS:</h6>
-<p><em>mkdir</em> : make directories
-            -p : make parent directories in the given path, if not existing
-            -v : print a message for each directory created (verbose output)</p>
+<blockquote>
+<p><em>mkdir</em> : make directories</p>
+<blockquote>
+<p>-p : make parent directories in the given path, if not existing<br>-v : print a message for each directory created (verbose output)</p>
+</blockquote>
+</blockquote>
 <p><strong>2a. Write a shell script that accepts two filenames as arguments, checks if the permissions for these files are identical and if the permissions are identical, output common permissions otherwise output each filename followed by its permissions.</strong></p>
 <pre><code>if [ $# -eq 2 ]
 then
@@ -101,9 +102,12 @@ else
 
 fi
 </code></pre><h6 id="command-details">COMMAND DETAILS:</h6>
-<p><em>stat</em> : display file or filesystem status
-            %a : access rights in octal
-            %A : access rights in Human Readable Format</p>
+<blockquote>
+<p><em>stat</em> : display file or filesystem status</p>
+<blockquote>
+<p>%a : access rights in octal<br>%A : access rights in Human Readable Format</p>
+</blockquote>
+</blockquote>
 <p><strong>2b. Write a shell script which accepts valid log-in names as arguments and prints their corresponding home directories, if no arguments are specified, print a suitable error message.</strong></p>
 <pre><code>if [ $# -eq 0 ]
 then
@@ -121,9 +125,11 @@ else
     done
 fi
 </code></pre><h6 id="command-details">COMMAND DETAILS:</h6>
-<p><em>grep</em> : print lines that match a given pattern
-<em>eval</em> : command used construct commands by concatenating arguments
-<strong>~</strong> : Tilde Operator, used to expand a given user&#39;s home directory</p>
+<blockquote>
+<p><em>grep</em> : print lines that match a given pattern  </p>
+<p><em>eval</em> : command used construct commands by concatenating arguments  </p>
+<p><strong>~</strong> : Tilde Operator, used to expand a given user&#39;s home directory</p>
+</blockquote>
 <p><strong>3a. Create a script file called file properties that reads a filename entered and outputs it properties.</strong></p>
 <pre><code>if [ $# -ne 1 ]
 then
@@ -142,13 +148,231 @@ else
     fi
 fi
 </code></pre><h6 id="command-details">COMMAND DETAILS:</h6>
-<p><em>stat</em> : display file or filesystem status
-            %A : access rights in Human readable format
-            %F : File type
-            %U : Owner of the File
-            %G : Group owner of the File
-            %s : total size of the file in bytes</p>
+<blockquote>
+<p><em>stat</em> : display file or filesystem status   </p>
+<blockquote>
+<p>%A : access rights in Human readable format<br>%F : File type<br>%U : Owner of the File<br>%G : Group owner of the File<br>%s : total size of the file in bytes</p>
+</blockquote>
+</blockquote>
 <p><strong>3b. Write a shell script to implement terminal locking (Similar to the lock command). It should prompt for the user for a password. After accepting the password entered by the user, it must prompt again for the matching password as confirmation and if match occurs, it must lock the keyword until a matching password is entered again by the user. Note the Script must be written to disregard BREAK, control-D. No time limit need be implemented for the lock duration.</strong></p>
+<pre><code>while true
+do
+    clear
+    echo &quot;**Password entered will not visible for security reasons**&quot;
+    echo &quot;Enter Password: &quot;
+    read -s passFirst
+    echo &quot;Re-enter Password: &quot;
+    read -s passConfirm
+
+    if [ &quot;$passFirst&quot; = &quot;$passConfirm&quot; ]
+    then
+        clear
+        echo &quot;Terminal Locked !&quot;
+        stty intr &#39;&#39;
+        stty eof &#39;&#39;
+        stty kill &#39;&#39;
+        stty stop &#39;&#39;
+        stty susp &#39;&#39;
+        echo &quot;To unlock, Enter Password: &quot;
+        passFirst=&quot;&quot;
+        until [ &quot;$passFirst&quot; = &quot;$passConfirm&quot; ]
+        do
+            read -s passFirst
+        done
+        stty intr &#39;^C&#39;
+        stty eof &#39;^D&#39;
+        stty kill &#39;^U&#39;
+        stty stop &#39;^S&#39;
+        stty susp &#39;^Z&#39;
+        echo &quot;Terminal Unlocked !&quot;
+        exit
+    else
+        echo &quot;Password Mismatch !&quot;
+        sleep 3
+    fi
+done
+</code></pre><h6 id="command-details">COMMAND DETAILS:</h6>
+<blockquote>
+<p><em>read</em> : read from a file descriptor  </p>
+<blockquote>
+<p>-s : does not echo input coming from a terminal</p>
+</blockquote>
+<p><em>stty</em> : change and print terminal line settings</p>
+<blockquote>
+<p>intr : interupt,Terminates the current job (Default : &quot;^C&quot;)<br>eof : end of file, Forced Exit (Default : &quot;^D&quot;)<br>kill : erases the text before the cursor (Defulat : &quot;^U&quot;)<br>stop : stops the output (Default : &quot;^S&quot;)<br>susp : sends the current job to backgroud (Default : &quot;^Z&quot;)  </p>
+</blockquote>
+</blockquote>
+<p><strong>4a. Write a shell script that accept one or more file names as argument and convert all of them to uppercase, provided they exists in current directory.</strong></p>
+<pre><code>if [ $# -eq 0 ]
+then
+    echo &quot;This script requires atleast one filename as arguement&quot;
+else
+    for i in $*
+    do
+        if [ -f $i ]
+        then
+            tr &#39;[a-z]&#39; &#39;[A-Z]&#39; &lt; $i&gt;tempFile
+            mv tempFile $i
+            echo &quot;File $i has been translated.&quot;
+        else
+            echo &quot;$i does not exist in the current directory&quot;
+            exit 1
+        fi
+    done
+fi
+</code></pre><h6 id="command-details">COMMAND DETAILS:</h6>
+<blockquote>
+<p><em>tr</em> : translate or delete characters   </p>
+<p><em>mv</em> : move or rename files</p>
+</blockquote>
+<p><strong>4b. Write a shell script that displays all the links to a file specified as the first argument to the script. The second argument, which is optional, can be used to specify in which the search is to begin. If this second argument is not present, the search is to begin in the current working directory. In either case, the starting directory as well as its subdirectories at all levels must be searched. The script need not include error checking.</strong></p>
+<pre><code>if [ $# -eq 0 ]
+then
+    printf &quot;Invalid arguments&quot;
+else
+    if [ $# -eq 1 ]
+    then 
+        dir=`pwd`
+    elif [ $# -eq 2 ] 
+    then
+        dir=$2 
+    fi
+
+if [ -f $1 ] 
+then
+    inode=`ls -i $1 | cut -d &quot; &quot; -f 1`
+    printf &quot;hard link of $1 are:\n&quot; 
+    find $dir -inum $inode
+    find $dir -type l -ls |tr -s &quot; &quot; |grep $1 |cut -d &quot; &quot; -f 11 &gt; soft 
+    s=`wc -l &lt; soft`
+    if [ $S -eq 0 ] 
+    then
+        echo “There is no soft links” 
+    else
+        echo “soft links of $1 are” 
+        cat soft
+    fi
+else
+    printf &quot;file doesn&#39;t exist&quot;
+fi
+fi
+</code></pre><h6 id="command-details">COMMAND DETAILS:</h6>
+<blockquote>
+<p><em>pwd</em> : prints working directory   </p>
+<p><em>ls</em> : list directory contents   </p>
+<blockquote>
+<p>-i : print the index number of each file  </p>
+</blockquote>
+<p><em>cut</em> : removes sections from each line of the file</p>
+<blockquote>
+<p>-d : delimiting character at which the line has to be split<br>-f : print n or nth field(s) in the result after cut  </p>
+</blockquote>
+<p><em>find</em> : find command searches for a file in directory hierarchy  </p>
+<blockquote>
+<p>-inum : looks for file(s) with index number passwd as argument<br>-type : look for file(s) of specific type (&quot;l&quot; for Symbolic link)<br>-ls : list the files found in output similar to <code>ls -dils</code>  </p>
+</blockquote>
+<p><em>tr</em> : translate or delete characters   </p>
+<blockquote>
+<p>-s : replace each sequence of the repeated character specified with songle occurrence of that character   </p>
+</blockquote>
+<p><em>grep</em> : print lines that match a given pattern  </p>
+<p><em>wc</em> : print newline, word, and byte counts for each file   </p>
+<blockquote>
+<p>-l : print newline counts</p>
+</blockquote>
+</blockquote>
+<p><strong>5a. Write a shell script that accepts filename as argument and display its creation
+time if file exist and if does not send output error message.</strong></p>
+<pre><code>if [[ ! -f &quot;$1&quot;  ||  $# -ne 1 ]]
+then
+    echo &quot;This script only accepts one valid filename as arguement!&quot;
+else
+    statLAT=$(stat --printf &quot;%x&quot;)
+    lat=$(date --date=&quot;$statLAT&quot; +&quot;%d/%m/%Y  %I:%M %p&quot;)
+    echo &quot;FileName: $1&quot;
+    echo &quot;Last Access Time: $lat&quot;
+fi
+</code></pre><h6 id="command-details">COMMAND DETAILS:</h6>
+<blockquote>
+<p><em>stat</em> : display file or filesystem status   </p>
+<blockquote>
+<p>%x : last access time in human readable format</p>
+</blockquote>
+</blockquote>
+<p><strong>5b. Write a shell script to display the calendar for the current month with current date replaced by * or </strong> depending whether the date is one digit or two digit.**</p>
+<pre><code>echo -e &quot;Current Date: $(date +&quot;%d/%m/%Y&quot;)\n&quot;
+currDate=$(date +&quot;%d&quot;)
+#currDate=21
+if [ $currDate -le 9 ]
+then
+    currDate=$(echo $currDate | cut -f 2)
+    echo &quot;$(ncal | sed &#39;s/\b&#39;&quot;$currDate&quot;&#39;\b/&#39;*&#39;/&#39;)&quot;
+else
+    echo &quot;$(ncal | sed &#39;s/\b&#39;&quot;$currDate&quot;&#39;\b/&#39;**&#39;/&#39;)&quot;
+fi
+</code></pre><h6 id="command-details">COMMAND DETAILS:</h6>
+<blockquote>
+<p><em>ncal</em> : displays a calendar of the current month highlighting the current date</p>
+<p><em>date</em> : print or set the system date and time   </p>
+<blockquote>
+<p>%d : day of the month</p>
+</blockquote>
+<p><em>cut</em> : removes sections from each line of the file   </p>
+<blockquote>
+<p>-f : print n or nth field(s) in the result after cut</p>
+</blockquote>
+<p><em>sed</em> : stream editor for filtering and transforming text   </p>
+<blockquote>
+<p>s/regexp/replacement/ : search and attempt to match the given regular expression against the pattern space and If search is successful, replace the portion matched with the replacement.<br>\b : matches for complete word</p>
+</blockquote>
+</blockquote>
+<p><strong>6a. Write s a shell script to find a file/s that matches a pattern given as command line argument in the home directory, display the contents of the file and copy the file into the directory ~/mydir.</strong></p>
+<pre><code>if [ $# -eq 0 ]
+then
+    echo “No arguments”
+    exit
+fi
+for i in $*
+do
+    echo grep –riew $* ~/
+    ls $*
+    cat $* 
+           cp $* ~/mydir
+done
+</code></pre><h6 id="command-details">COMMAND DETAILS:</h6>
+<blockquote>
+<p><em>grep</em> : print lines that match a given pattern  </p>
+<blockquote>
+<p>-r : Read  all  files  under  each  directory, recursively, following symbolic links only if they are on the command line<br>-i : Ignore case distinctions in patterns and input data
+-e : Use the argument as regexp pattern
+-w : Select only those lines containing matches that form whole words.</p>
+</blockquote>
+</blockquote>
+<p><strong>6b. Write a shell script to list all the files in a directory whose filename is at least 10 characters. (use expr command to check the length).</strong></p>
+<pre><code>currentDir=$(pwd)
+listOfFiles=$(ls -l &quot;$currentDir&quot; | awk &#39;{print $9}&#39;)
+echo &quot;Current Directory: $currentDir&quot;
+echo &quot;All files whose filename is at least 10 characters: &quot;
+for f in $listOfFiles
+do
+    if [ $(expr length &quot;$f&quot;) -gt 10 ]
+    then
+        echo $f
+    fi
+done
+</code></pre><h6 id="commmand-details">COMMMAND DETAILS:</h6>
+<blockquote>
+<p><em>ls</em> : list directory contents   </p>
+<blockquote>
+<p>-l : use a long listing format</p>
+</blockquote>
+<p><em>awk</em> : pattern scanning and processing language</p>
+<p><em>expr</em> : evaluate expressions</p>
+<blockquote>
+<p>length : computes the length of the argument</p>
+</blockquote>
+</blockquote>
+<p><strong>7a.Write a shell script that gets executed and displays the message either “Good Morning” or “Good Afternoon” or “Good Evening” depending upon time at which the user logs in.</strong></p>
 
         </article>
     </body>
