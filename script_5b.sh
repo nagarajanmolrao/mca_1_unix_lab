@@ -5,9 +5,9 @@ currDate=$(date +"%d")
 #currDate=21
 if [ $currDate -le 9 ]
 then
-	currDate=$(echo $currDate | sed 's/'0'/''/')
-	echo "$(ncal | sed 's/\b'"$currDate"'\b/'*'/1')"
+	currDate=$(echo $currDate | cut -f 2)
+	echo "$(ncal | sed 's/\b'"$currDate"'\b/'*'/')"
 else
-	echo "$(ncal | sed 's/\b'"$currDate"'\b/'**'/1')"
+	echo "$(ncal | sed 's/\b'"$currDate"'\b/'**'/')"
 fi
 

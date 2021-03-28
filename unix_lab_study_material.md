@@ -291,4 +291,28 @@ fi
 **5b. Write a shell script to display the calendar for the current month with current date replaced by * or ** depending whether the date is one digit or two digit.**
 
 ```
+echo -e "Current Date: $(date +"%d/%m/%Y")\n"
+currDate=$(date +"%d")
+#currDate=21
+if [ $currDate -le 9 ]
+then
+	currDate=$(echo $currDate | cut -f 2)
+	echo "$(ncal | sed 's/\b'"$currDate"'\b/'*'/')"
+else
+	echo "$(ncal | sed 's/\b'"$currDate"'\b/'**'/')"
+fi
+```
+
+######COMMAND DETAILS:
+> *ncal* : displays a calendar of the current month highlighting the current date
+
+> *date* : print or set the system date and time   
+			>> %d : day of the month
+
+> *cut* : removes sections from each line of the file   
+			>> -f : print n or nth field(s) in the result after cut
+
+> *sed* : stream editor for filtering and transforming text   
+			>> s/regexp/replacement/ : search and attempt to match the given regular expression against the pattern space and If search is successful, replace the portion matched with the replacement.    
+			>> \b : matches for complete word 
 
