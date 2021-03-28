@@ -288,4 +288,7 @@ fi
 > *stat* : display file or filesystem status   
 			>> %x : last access time in human readable format
 
-**
+**5b. Write a shell script to display the calendar for the current month with current date replaced by * or ** depending whether the date is one digit or two digit.**
+
+```
+
