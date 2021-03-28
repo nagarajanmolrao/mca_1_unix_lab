@@ -179,6 +179,34 @@ done
 			>> intr : interupt,Terminates the current job (Default : "^C")   
 			>> eof : end of file, Forced Exit (Default : "^D")   
 			>> kill : erases the text before the cursor (Defulat : "^U")   
-			>> stop : stops the output (Default : "^S")
-			>> susp : sends the current job to backgroud (Default : "^Z")
+			>> stop : stops the output (Default : "^S")   
+			>> susp : sends the current job to backgroud (Default : "^Z")  
+
+**4a. Write a shell script that accept one or more file names as argument and convert all of them to uppercase, provided they exists in current directory.**
+
+```
+if [ $# -eq 0 ]
+then
+	echo "This script requires atleast one filename as arguement"
+else
+	for i in $*
+	do
+		if [ -f $i ]
+		then
+			tr '[a-z]' '[A-Z]' < $i>tempFile
+			mv tempFile $i
+			echo "File $i has been translated."
+		else
+			echo "$i does not exist in the current directory"
+			exit 1
+		fi
+	done
+fi
+```
+
+######COMMAND DETAILS:  
+> *tr* : translate or delete characters   
+> *mv* : move or rename files
+
+**4b. Write a shell script that displays all the links to a file specified as the first argument to the script. The second argument, which is optional, can be used to specify in which the search is to begin. If this second argument is not present, the search is to begin in the current working directory. In either case, the starting directory as well as its subdirectories at all levels must be searched. The script need not include error checking.**
 

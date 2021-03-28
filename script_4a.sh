@@ -8,8 +8,8 @@ else
 	do
 		if [ -f $i ]
 		then
-			tr '[a-z]' '[A-Z]' < $i>temp
-			mv temp $i
+			tr '[a-z]' '[A-Z]' < $i>tempFile
+			mv tempFile $i
 			echo "File $i has been translated."
 		else
 			echo "$i does not exist in the current directory"
