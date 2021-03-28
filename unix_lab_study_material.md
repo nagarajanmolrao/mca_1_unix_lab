@@ -136,7 +136,7 @@ fi
 while true
 do
 	clear
-	echo "**Password entered is not visible for security reasons**"
+	echo "**Password entered will not visible for security reasons**"
 	echo "Enter Password: "
 	read -s passFirst
 	echo "Re-enter Password: "
@@ -145,19 +145,24 @@ do
 	if [ "$passFirst" = "$passConfirm" ]
 	then
 		clear
-		echo -e "\033[31mTerminal Locked !\033[0m"
+		echo "Terminal Locked !"
 		stty intr ''
 		stty eof ''
-		stty susp ''
-		stty stop ''
 		stty kill ''
+		stty stop ''
+		stty susp ''
 		echo "To unlock, Enter Password: "
 		passFirst=""
 		until [ "$passFirst" = "$passConfirm" ]
 		do
 			read -s passFirst
 		done
-		echo -e "\033[32mTerminal Unlocked !\033[0m"
+		stty intr '^C'
+		stty eof '^D'
+		stty kill '^U'
+		stty stop '^S'
+		stty susp '^Z'
+		echo "Terminal Unlocked !"
 		exit
 	else
 		echo "Password Mismatch !"
@@ -171,4 +176,9 @@ done
 			>> -s : does not echo input coming from a terminal
 
 > *stty* : change and print terminal line settings
-			>> 
+			>> intr : interupt,Terminates the current job (Default : "^C")   
+			>> eof : end of file, Forced Exit (Default : "^D")   
+			>> kill : erases the text before the cursor (Defulat : "^U")   
+			>> stop : stops the output (Default : "^S")
+			>> susp : sends the current job to backgroud (Default : "^Z")
+
