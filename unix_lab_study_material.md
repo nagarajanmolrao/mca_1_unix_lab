@@ -47,9 +47,9 @@ fi
 ```
 
 ######COMMAND DETAILS:
-*mkdir* : make directories
-			-p : make parent directories in the given path, if not existing
-			-v : print a message for each directory created (verbose output)
+> *mkdir* : make directories
+			>> -p : make parent directories in the given path, if not existing  
+			>> -v : print a message for each directory created (verbose output)
 			
 **2a. Write a shell script that accepts two filenames as arguments, checks if the permissions for these files are identical and if the permissions are identical, output common permissions otherwise output each filename followed by its permissions.**
 
@@ -73,9 +73,9 @@ fi
 ```
 
 ######COMMAND DETAILS:
-*stat* : display file or filesystem status
-			%a : access rights in octal
-			%A : access rights in Human Readable Format
+> *stat* : display file or filesystem status
+			>> %a : access rights in octal  
+			>> %A : access rights in Human Readable Format
 			
 **2b. Write a shell script which accepts valid log-in names as arguments and prints their corresponding home directories, if no arguments are specified, print a suitable error message.**
 
@@ -97,9 +97,11 @@ else
 fi
 ```
 ######COMMAND DETAILS:
-*grep* : print lines that match a given pattern
-*eval* : command used construct commands by concatenating arguments
-**~** : Tilde Operator, used to expand a given user's home directory
+> *grep* : print lines that match a given pattern  
+
+> *eval* : command used construct commands by concatenating arguments  
+
+> **~** : Tilde Operator, used to expand a given user's home directory
 
 **3a. Create a script file called file properties that reads a filename entered and outputs it properties.**
 
@@ -123,12 +125,12 @@ fi
 ```
 
 ######COMMAND DETAILS:
-*stat* : display file or filesystem status
-			%A : access rights in Human readable format
-			%F : File type
-			%U : Owner of the File
-			%G : Group owner of the File
-			%s : total size of the file in bytes
+> *stat* : display file or filesystem status   
+			>> %A : access rights in Human readable format  
+			>> %F : File type  
+			>> %U : Owner of the File  
+			>> %G : Group owner of the File  
+			>> %s : total size of the file in bytes
 
 **3b. Write a shell script to implement terminal locking (Similar to the lock command). It should prompt for the user for a password. After accepting the password entered by the user, it must prompt again for the matching password as confirmation and if match occurs, it must lock the keyword until a matching password is entered again by the user. Note the Script must be written to disregard BREAK, control-D. No time limit need be implemented for the lock duration.**
 
@@ -206,6 +208,7 @@ fi
 
 ######COMMAND DETAILS:  
 > *tr* : translate or delete characters   
+
 > *mv* : move or rename files
 
 **4b. Write a shell script that displays all the links to a file specified as the first argument to the script. The second argument, which is optional, can be used to specify in which the search is to begin. If this second argument is not present, the search is to begin in the current working directory. In either case, the starting directory as well as its subdirectories at all levels must be searched. The script need not include error checking.**
@@ -245,22 +248,43 @@ fi
 
 ######COMMAND DETAILS:
 > *pwd* : prints working directory   
+
 > *ls* : list directory contents   
 			>> -i : print the index number of each file  
+
 > *cut* : removes sections from each line of the file
 			>> -d : delimiting character at which the line has to be split   
 			>> -f : print n or nth field(s) in the result after cut  
+
 > *find* : find command searches for a file in directory hierarchy  
  			>> -inum : looks for file(s) with index number passwd as argument   
  			>> -type : look for file(s) of specific type ("l" for Symbolic link)  
  			>> -ls : list the files found in output similar to ```ls -dils```  
+
 > *tr* : translate or delete characters   
 			>> -s : replace each sequence of the repeated character specified with songle occurrence of that character   
+
 > *grep* : print lines that match a given pattern  
+
 > *wc* : print newline, word, and byte counts for each file   
 			>> -l : print newline counts
 
 **5a. Write a shell script that accepts filename as argument and display its creation
 time if file exist and if does not send output error message.**
 
+```
+if [[ ! -f "$1"  ||  $# -ne 1 ]]
+then
+	echo "This script only accepts one valid filename as arguement!"
+else
+	statLAT=$(stat "$1" | awk '/Access/ && NR==5 {print $2,$3,$4}')
+	lat=$(date --date="$statLAT" +"%d/%m/%Y  %I:%M %p")
+	echo "FileName: $1"
+	echo "Last Access Time: $lat"
+fi
+```
 
+######COMMAND DETAILS:
+> *stat* : display file or filesystem status   
+
+> *awk* :  pattern scanning and processing language
