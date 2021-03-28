@@ -3,7 +3,7 @@
 while true
 do
 	clear
-	echo "**Password entered is not visible for security reasons**"
+	echo "**Password entered will not visible for security reasons**"
 	echo "Enter Password: "
 	read -s passFirst
 	echo "Re-enter Password: "
@@ -12,12 +12,12 @@ do
 	if [ "$passFirst" = "$passConfirm" ]
 	then
 		clear
-		echo -e "\033[31mTerminal Locked !\033[0m"
+		echo "Terminal Locked !"
 		stty intr ''
 		stty eof ''
-		stty susp ''
-		stty stop ''
 		stty kill ''
+		stty stop ''
+		stty susp ''
 		echo "To unlock, Enter Password: "
 		passFirst=""
 		until [ "$passFirst" = "$passConfirm" ]
@@ -26,10 +26,10 @@ do
 		done
 		stty intr '^C'
 		stty eof '^D'
-		stty susp '^Z'
-		stty stop '^S'
 		stty kill '^U'
-		echo -e "\033[32mTerminal Unlocked !\033[0m"
+		stty stop '^S'
+		stty susp '^Z'
+		echo "Terminal Unlocked !"
 		exit
 	else
 		echo "Password Mismatch !"
