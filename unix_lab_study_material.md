@@ -67,7 +67,8 @@ then
 		echo The given files have different permissions
 	fi
 else
-	echo "This script is programmed to use two files in order to compare their permissions"
+	echo "This script is programmed to use two files in order 
+		to compare their permissions"
 
 fi
 ```
@@ -428,7 +429,8 @@ else
 	then
 		if [ $(last -Fw|grep -c $1) -ne 0 ]
 		then
-			loginDate=$(last -Fw |grep $1 | head -1 | tr -s " " | awk '{printf("%s %s %s %s\n",$5,$6,$7,$8)}')
+			loginDate=$(last -Fw |grep $1 | head -1 | tr -s " " | 
+				awk '{printf("%s %s %s %s\n",$5,$6,$7,$8)}')
 			loginDate=$(date -d "$loginDate" "+%s")
 			currDate=$(date "+%s")
 			sessionTime=$((currDate-loginDate))
@@ -436,7 +438,9 @@ else
 			shour=$(( (sessionTime-(sday*86400))/3600 ))
 			smin=$(( (sessionTime-(sday*86400)-(shour*3600))/60 ))
 			ssec=$(( (sessionTime-(sday*86400)-(shour*3600)-(smin*60)) ))
-			printf "Active Session Time: %02d days %02d hours %02d mins %02d secs\n" "$sday" "$shour" "$smin" "$ssec"
+			printf "Active Session Time: %02d days 
+				%02d hours %02d mins %02d secs\n"
+				 "$sday" "$shour" "$smin" "$ssec"
 
 		else
 			echo "The user has no recent logins"
@@ -510,7 +514,8 @@ as an argument and display all the lines between the given line number.**
 ```
 if [ $# -ne 3 ]
 then
-	echo "This script requires three arguemnts! FileName,Starting Line Number and Ending Line Number"
+	echo "This script requires three arguemnts! 
+		FileName,Starting Line Number and Ending Line Number"
 	exit
 else
 	if [ -f $1 ]
