@@ -367,4 +367,42 @@ done
 
 **7a.Write a shell script that gets executed and displays the message either “Good Morning” or “Good Afternoon” or “Good Evening” depending upon time at which the user logs in.**
 
+```
+currentTime=$(date +"%H")
+if [[ $currentTime -ge 00 && $currentTime -le 11 ]]
+then
+	echo "Good Morning!"
+elif [[ $currentTime -ge 12 && $currentTime -le 14 ]]
+then
+	echo "Good Afternoon!"
+elif [[ $currentTime -ge 15 && $currentTime -le 18 ]]
+then
+	echo "Good Evening!"
+else
+	echo "Good Night!"
+fi
+```
+
+######COMMAND DETAILS:
+> *date* : print or set the system date and time   
+			>> %H : Time in 24H format  
+
+**7b.Write a shell script that accepts a list of filenames as its argument, count and
+report occurrence of each word that is present in the first argument file on other argument files.**
+
+```
+if [ $# -ne 2 ]
+then
+	echo "This script takes in two filenames as arguements"
+	exit
+else
+	string1=`cat $1 | tr '\n' ' '`
+	for a in $string1
+	do
+		echo "$a: `grep -c "$a" "$2"`"
+	done
+fi
+```
+
+######COMMAND DETAILS:
 
