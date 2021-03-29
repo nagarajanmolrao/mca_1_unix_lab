@@ -455,16 +455,20 @@ nanmolrao@aloo:~/mca_1_unix_lab$
 ```
 if [ $# -eq 0 ]
 then
-	echo “No arguments”
-	exit
+        echo “No arguments”
+        exit
+else
+        list=$(grep -rwlc "$1" *)
+        if [ $? -eq 0 ] 
+        then
+                for x in $list
+                do
+                        echo "Filename: $x"
+                        cat $x
+                        cp -v $x ~/mydir
+                done
+        fi
 fi
-for i in $*
-do
-	echo grep –riew $* ~/
-	ls $*
-	cat $* 
-       	cp $* ~/mydir
-done
 ```
 
 ######COMMAND DETAILS:
@@ -475,6 +479,54 @@ done
 			>> -w : Select only those lines containing matches that form whole words.  
 
 ######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ mkdir ~/mydir
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_6a.sh act*
+Filename: words
+act
+action
+activity
+actually
+add
+address
+administration
+admit
+adult
+affect
+
+'words' -> '/home/nanmolrao/mydir/words'
+Filename: words2
+act
+action
+activity
+actually
+add
+address
+administration
+admit
+adult
+affect
+act
+action
+activity
+actually
+add
+address
+administration
+admit
+adult
+affect
+agency
+agent
+ago
+agree
+agreement
+ahead
+air
+all
+'words2' -> '/home/nanmolrao/mydir/words2'
+nanmolrao@aloo:~/mca_1_unix_lab$
+```
 
 **6b. Write a shell script to list all the files in a directory whose filename is at least 10 characters. (use expr command to check the length).**
 
@@ -778,4 +830,5 @@ echo "File Folded!"
 
 > *cut* : removes sections from each line of the file   
 			>> -c : select only these characters  
+
 
