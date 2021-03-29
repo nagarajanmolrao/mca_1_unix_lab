@@ -38,7 +38,13 @@ fi
 
 ######OUTPUT:
 ```
-			
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_1a.sh ~/mca_1_unix_lab/
+Larget File in the directory: /home/nanmolrao/mca_1_unix_lab/
+		unix_lab_study_material.md
+nanmolrao@aloo:~/mca_1_unix_lab$
+```
+
+
 **1b. Write a shell script that accepts a path name and creates all the components in that path name as directories. For example, if the script is named as mpc, then the command mpc a/b/c/d should create sub-directories a, a/b, a/b/c, a/b/c/d**
 
 ```
@@ -53,7 +59,19 @@ fi
 ######COMMAND DETAILS:
 > *mkdir* : make directories
 			>> -p : make parent directories in the given path, if not existing  
-			>> -v : print a message for each directory created (verbose output)
+			>> -v : print a message for each directory created (verbose output)   
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_1b.sh oxford/engineering/mca/2020/Sem1
+mkdir: created directory 'oxford'
+mkdir: created directory 'oxford/engineering'
+mkdir: created directory 'oxford/engineering/mca'
+mkdir: created directory 'oxford/engineering/mca/2020'
+mkdir: created directory 'oxford/engineering/mca/2020/Sem1'
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
+
 			
 **2a. Write a shell script that accepts two filenames as arguments, checks if the permissions for these files are identical and if the permissions are identical, output common permissions otherwise output each filename followed by its permissions.**
 
@@ -82,7 +100,19 @@ fi
 ######COMMAND DETAILS:
 > *stat* : display file or filesystem status
 			>> %a : access rights in octal  
-			>> %A : access rights in Human Readable Format
+			>> %A : access rights in Human Readable Format   
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_2a.sh script_1a.sh UnixLabSyllabus.pdf 
+The given files have different permissions
+script_1a.sh : -rwxrwxr-x
+UnixLabSyllabus.pdf : -rw-rw-r--
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_2a.sh script_1a.sh script_2b.sh
+Both the files have same permissions: -rwxrwxr-x
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
+
 			
 **2b. Write a shell script which accepts valid log-in names as arguments and prints their corresponding home directories, if no arguments are specified, print a suitable error message.**
 
@@ -108,7 +138,19 @@ fi
 
 > *eval* : command used construct commands by concatenating arguments  
 
-> **~** : Tilde Operator, used to expand a given user's home directory
+> **~** : Tilde Operator, used to expand a given user's home directory  
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_2b.sh nanmolrao mail nobody
+Home directory for nanmolrao: 
+/home/nanmolrao
+Home directory for mail: 
+/var/mail
+Home directory for nobody: 
+/nonexistent
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
 
 **3a. Create a script file called file properties that reads a filename entered and outputs it properties.**
 
@@ -137,7 +179,19 @@ fi
 			>> %F : File type  
 			>> %U : Owner of the File  
 			>> %G : Group owner of the File  
-			>> %s : total size of the file in bytes
+			>> %s : total size of the file in bytes  
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_3a.sh UnixLabSyllabus.pdf 
+Name : UnixLabSyllabus.pdf
+Permissions : -rw-rw-r--
+Type: regular file
+Owner: nanmolrao
+Group: nanmolrao
+Size: 86545
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
 
 **3b. Write a shell script to implement terminal locking (Similar to the lock command). It should prompt for the user for a password. After accepting the password entered by the user, it must prompt again for the matching password as confirmation and if match occurs, it must lock the keyword until a matching password is entered again by the user. Note the Script must be written to disregard BREAK, control-D. No time limit need be implemented for the lock duration.**
 
@@ -189,7 +243,20 @@ done
 			>> eof : end of file, Forced Exit (Default : "^D")   
 			>> kill : erases the text before the cursor (Defulat : "^U")   
 			>> stop : stops the output (Default : "^S")   
-			>> susp : sends the current job to backgroud (Default : "^Z")  
+			>> susp : sends the current job to backgroud (Default : "^Z")    
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ ./script_3b.sh 
+**Password entered will not visible for security reasons**
+Enter Password: #enter password
+Re-enter Password: #enter the password again
+Terminal Locked !
+To unlock, Enter Password: #enter the correct password
+Terminal Unlocked !
+nanmolrao@aloo:~/mca_1_unix_lab$
+```
+
 
 **4a. Write a shell script that accept one or more file names as argument and convert all of them to uppercase, provided they exists in current directory.**
 
@@ -216,7 +283,29 @@ fi
 ######COMMAND DETAILS:  
 > *tr* : translate or delete characters   
 
-> *mv* : move or rename files
+> *mv* : move or rename files  
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ cat smallWords 
+act
+action
+activity
+actually
+add
+address
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_4a.sh smallWords 
+File smallWords has been translated.
+nanmolrao@aloo:~/mca_1_unix_lab$ cat smallWords 
+ACT
+ACTION
+ACTIVITY
+ACTUALLY
+ADD
+ADDRESS
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
+
 
 **4b. Write a shell script that displays all the links to a file specified as the first argument to the script. The second argument, which is optional, can be used to specify in which the search is to begin. If this second argument is not present, the search is to begin in the current working directory. In either case, the starting directory as well as its subdirectories at all levels must be searched. The script need not include error checking.**
 
@@ -274,20 +363,33 @@ fi
 > *grep* : print lines that match a given pattern  
 
 > *wc* : print newline, word, and byte counts for each file   
-			>> -l : print newline counts
+			>> -l : print newline counts  
 
-**5a. Write a shell script that accepts filename as argument and display its creation
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ ln smallWords miniWords
+nanmolrao@aloo:~/mca_1_unix_lab$ ln -s smallWords littleWords
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_4b.sh smallWords
+hard link of smallWords are:
+/home/nanmolrao/mca_1_unix_lab/smallWords
+/home/nanmolrao/mca_1_unix_lab/miniWords
+Soft links of smallWords are
+/home/nanmolrao/mca_1_unix_lab/littleWords
+```
+
+
+**5a. Write a shell script that accepts filename as argument and display its last access 
 time if file exist and if does not send output error message.**
 
 ```
-if [[ ! -f "$1"  ||  $# -ne 1 ]]
+if [ ! -f "$1" ] || [ $# -ne 1  ]
 then
-	echo "This script only accepts one valid filename as arguement!"
+        echo "This script only accepts one valid filename as arguement!"
 else
-	statLAT=$(stat --printf "%x")
-	lat=$(date --date="$statLAT" +"%d/%m/%Y  %I:%M %p")
-	echo "FileName: $1"
-	echo "Last Access Time: $lat"
+        statLAT=$(stat --printf "%x" $1)
+        lat=$(date --date="$statLAT" +"%d/%m/%Y  %I:%M %p")
+        echo "FileName: $1"
+        echo "Last Access Time: $lat"
 fi
 ```
 
@@ -295,12 +397,18 @@ fi
 > *stat* : display file or filesystem status   
 			>> %x : last access time in human readable format
 
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_5a.sh script_4b.sh
+FileName: script_4b.sh
+Last Access Time: 29/03/2021  07:01 PM
+```
+
 **5b. Write a shell script to display the calendar for the current month with current date replaced by * or ** depending whether the date is one digit or two digit.**
 
 ```
-echo -e "Current Date: $(date +"%d/%m/%Y")\n"
+echo "Current Date: $(date +"%d/%m/%Y")\n"
 currDate=$(date +"%d")
-#currDate=21
 if [ $currDate -le 9 ]
 then
 	currDate=$(echo $currDate | cut -f 2)
@@ -321,9 +429,26 @@ fi
 
 > *sed* : stream editor for filtering and transforming text   
 			>> s/regexp/replacement/ : search and attempt to match the given regular expression against the pattern space and If search is successful, replace the portion matched with the replacement.    
-			>> \b : matches for complete word
+			>> \b : matches for complete word  
 
-**6a. Write s a shell script to find a file/s that matches a pattern given as command line argument in the home directory, display the contents of the file and copy the file into the directory ~/mydir.**
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_5b.sh 
+Current Date: 29/03/2021
+
+    March 2021        
+Su     7 14 21 28   
+Mo  1  8 15 22 **   
+Tu  2  9 16 23 30   
+We  3 10 17 24 31   
+Th  4 11 18 25      
+Fr  5 12 19 26      
+Sa  6 13 20 27      
+nanmolrao@aloo:~/mca_1_unix_lab$
+```
+
+
+**6a. Write a shell script to find a file/s that matches a pattern given as command line argument in the home directory, display the contents of the file and copy the file into the directory ~/mydir.**
 
 ```
 if [ $# -eq 0 ]
@@ -345,7 +470,11 @@ done
 			>> -r : Read  all  files  under  each  directory, recursively, following symbolic links only if they are on the command line   
 			>> -i : Ignore case distinctions in patterns and input data
 			>> -e : Use the argument as regexp pattern
-			>> -w : Select only those lines containing matches that form whole words.
+			>> -w : Select only those lines containing matches that form whole words.  
+
+######OUTPUT:
+```
+
 
 **6b. Write a shell script to list all the files in a directory whose filename is at least 10 characters. (use expr command to check the length).**
 
