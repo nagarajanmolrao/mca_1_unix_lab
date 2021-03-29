@@ -6,9 +6,13 @@ then
 	exit
 else
 	string1=`cat $1 | tr '\n' ' '`
-	for a in $string1
+	for ((i=2; i<=$#; i++))
 	do
-		echo "$a: `grep -c "$a" "$2"`"
+		echo "Filename: ${!i}"
+		for a in $string1
+		do
+			echo "$a: `grep -c "$a" "${!i}"`"
+		done
 	done
 fi
 
