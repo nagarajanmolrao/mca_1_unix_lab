@@ -29,7 +29,7 @@ fi
 			>> -r : reverse sort
 
 > *head* : output from part of the file
-			>> -n : number of lines to be printed starting from 0
+			>> -n : number of lines to be printed starting from 1
 
 > *cut* : removes sections from each line of the file
 			>> -d : delimiting character at which the line has to be split   
@@ -397,12 +397,177 @@ then
 	exit
 else
 	string1=`cat $1 | tr '\n' ' '`
-	for a in $string1
+	for ((i=2; i<=$#; i++))
 	do
-		echo "$a: `grep -c "$a" "$2"`"
+		echo "Filename: ${!i}"
+		for a in $string1
+		do
+			echo "$a: `grep -c "$a" "${!i}"`"
+		done
 	done
 fi
 ```
 
 ######COMMAND DETAILS:
+> *cat* :  concatenate files and print on the standard output
 
+> *tr* : translate or delete characters
+
+> *grep* : print lines that match a given pattern  
+			>> -c : Suppress  normal  output;  instead  print  a  count of matching lines for each input file.
+
+**8a. Write a shell script that determine the period for which as specified user is working on a system and display appropriate message.**
+
+```
+if [ $# -ne 1 ]
+then
+	echo "This script takes one username as arguement!"
+	exit
+else
+	if [ $(grep -c $1 /etc/passwd) -ne 0 ]
+	then
+		if [ $(last -Fw|grep -c $1) -ne 0 ]
+		then
+			loginDate=$(last -Fw |grep $1 | head -1 | tr -s " " | awk '{printf("%s %s %s %s\n",$5,$6,$7,$8)}')
+			loginDate=$(date -d "$loginDate" "+%s")
+			currDate=$(date "+%s")
+			sessionTime=$((currDate-loginDate))
+			sday=$(( sessionTime/86400 ))
+			shour=$(( (sessionTime-(sday*86400))/3600 ))
+			smin=$(( (sessionTime-(sday*86400)-(shour*3600))/60 ))
+			ssec=$(( (sessionTime-(sday*86400)-(shour*3600)-(smin*60)) ))
+			printf "Active Session Time: %02d days %02d hours %02d mins %02d secs\n" "$sday" "$shour" "$smin" "$ssec"
+
+		else
+			echo "The user has no recent logins"
+			exit
+		fi
+	else
+		echo "Invalid Username!"
+		exit
+	fi
+fi
+```
+
+######COMMAND DETAILS:
+> *grep* : print lines that match a given pattern  
+			>> -c : Suppress  normal  output;  instead  print  a  count of matching lines for each input file.  
+
+> *last* : show a listing of last logged in users   
+			>> -F : Print full login and logout times and dates   
+			>> -w : Display full user names and domain names in the output  
+
+> *grep* : print lines that match a given pattern
+
+> *head* : output from part of the file
+			>> -n : number of lines to be printed starting from 1   
+
+> *tr* : translate or delete characters   
+
+> *awk* : pattern scanning and processing language   
+
+> *date* : print or set the system date and time   
+			>> %s : seconds since 1970-01-01
+			>> -d : display time described by STRING argument   
+
+**8b. Write a shell script that reports the logging on of as specified user within one minute after he/she login. The script automatically terminates if specified user does not login during specified in period of time.**
+
+```
+if [ $# -ne 1 ]
+then
+	echo "This script requires only one username as arguement"
+	exit
+else
+	startTime=$(date -d "now" "+%s")
+	until who|grep -sw "$1"
+	do
+		curTime=$(date -d "now" "+%s")
+		if [ $(( $curTime-$startTime )) -ge 90 ]
+		then
+			echo "Timed Out!"
+			exit
+		fi
+	done
+	echo "User $1 logged in !"
+	exit
+fi
+```
+
+######COMMAND DETAILS:
+> *date* : print or set the system date and time   
+			>> %s : seconds since 1970-01-01
+			>> -d : display time described by STRING argument
+
+> *who* : show who is logged on  
+
+> *grep* : print lines that match a given pattern  
+			>> -s : Suppress error messages about nonexistent or unreadable files
+			>> -w : Select only those lines containing matches that form whole words   
+
+**9a. Write a shell script that accepts the filename, starting and ending line number
+as an argument and display all the lines between the given line number.**
+
+```
+if [ $# -ne 3 ]
+then
+	echo "This script requires three arguemnts! FileName,Starting Line Number and Ending Line Number"
+	exit
+else
+	if [ -f $1 ]
+	then
+		eval "sed -n $2,$3\p $1"
+		exit
+	else
+		echo "No Such File!"
+		exit
+	fi
+fi
+```
+
+######COMMAND DETAILS:
+> *sed* : stream editor for filtering and transforming text   
+			>> -n : suppress automatic printing of pattern space
+			>> p : print only specific lines based on the line number or pattern matches  
+
+**9b. Write a shell script that folds long lines into 40 columns. Thus any line that
+exceeds 40 characters must be broken after 40th, a “/” is to be appended as the indication of folding and processing is to be continued with the residue. The input is to be supplied through a text file created by the user.**
+
+```
+echo "Enter the filename:"
+read fn
+if [ ! -f "$fn" ]
+then
+	echo "Invalid Filename!"
+	exit
+fi
+
+for line in `cat $fn`
+do
+	length=$(echo $line|wc -c)
+	length=$(($length-1))
+	s=1;e=40
+	if [ $length -gt 40 ]
+	then
+		while [ $length -gt 40 ]
+		do
+			echo -e "$(echo $line| cut -c $s-$e) /"
+			s=$(($e+1))
+			e=$(($e+40))
+			length=$(($length-40))
+		done
+		echo "$(echo $line | cut -c $s- )"
+	else
+		echo $line
+	fi
+done
+echo "File Folded!"
+```
+
+######COMMAND DETAILS:
+> *cat* :  concatenate files and print on the standard output
+
+> *wc* : print newline, word, and byte counts for each file   
+			>> -c : print the byte counts
+
+> *cut* : removes sections from each line of the file   
+			>> -c : select only these characters  
