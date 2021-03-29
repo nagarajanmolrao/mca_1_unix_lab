@@ -17,13 +17,13 @@ then
 	inode=`ls -i $1 | cut -d " " -f 1`
 	printf "hard link of $1 are:\n" 
 	find $dir -inum $inode
-	find $dir -type l -ls |tr -s “ “|grep $1 |cut -d “ “ -f 11 > soft 
+	find $dir -type l -ls |tr -s " " |grep $1 |cut -d " " -f 12 > soft 
 	s=`wc -l < soft`
-	if [ $S -eq 0 ] 
+	if [ $s -eq 0 ] 
 	then
-		echo “There is no soft links” 
+		echo "There is no soft links"
 	else
-		echo “soft links of $1 are” 
+		echo "Soft links of $1 are"
 		cat soft
 	fi
 else
