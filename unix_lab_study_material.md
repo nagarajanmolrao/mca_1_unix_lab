@@ -1,4 +1,4 @@
-#Unix Lab Study Material
+#Unix Lab Programs
 
 **1a. Write a shell script that takes a valid directory name as a argument recursively descend all the sub-directories, find the maximum length of any file in that hierarchy and write the maximum value to the standard output.**
 
