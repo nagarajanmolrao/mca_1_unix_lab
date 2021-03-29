@@ -11,9 +11,12 @@ then
 		echo Both the files have same permissions: $(stat --printf="%A" $1)
 	else
 		echo The given files have different permissions
+		echo "$1 : $(stat --printf="%A" $1)"
+		echo "$2 : $(stat --printf="%A" $2)"
 	fi
 else
-	echo "This script is programmed to use two files in order to compare their permissions"
+	echo "This script is programmed to use two files in order 
+		to compare their permissions"
 
 fi
 

@@ -1,13 +1,14 @@
 #Unix Lab Study Material
 
-**1a. Write a shell script that takes a valid directory name as a argument recursively descend all the sub-directors, find the maximum length of any file in that hierarchy and write the maximum value to the standard output.**
+**1a. Write a shell script that takes a valid directory name as a argument recursively descend all the sub-directories, find the maximum length of any file in that hierarchy and write the maximum value to the standard output.**
 
 ```
 if [ $# -eq 1 ]
 then
 	if [ -e $1 ]
 	then
-		largeFile=$(find $1 -printf '%k %p\n' | sort -nr | head -n 1 | cut -d " " -f 2)
+		largeFile=$(find $1 -printf '%k %p\n' | sort -nr | head -n 1 | 
+			cut -d " " -f 2)
 		echo "Larget File in the directory: $largeFile"
 
 	else
@@ -33,7 +34,10 @@ fi
 
 > *cut* : removes sections from each line of the file
 			>> -d : delimiting character at which the line has to be split   
-			>> -f : print n or nth field(s) in the result after cut
+			>> -f : print n or nth field(s) in the result after cut   
+
+######OUTPUT:
+```
 			
 **1b. Write a shell script that accepts a path name and creates all the components in that path name as directories. For example, if the script is named as mpc, then the command mpc a/b/c/d should create sub-directories a, a/b, a/b/c, a/b/c/d**
 
@@ -65,6 +69,8 @@ then
 		echo Both the files have same permissions: $(stat --printf="%A" $1)
 	else
 		echo The given files have different permissions
+		echo "$1 : $(stat --printf="%A" $1)"
+		echo "$2 : $(stat --printf="%A" $2)"
 	fi
 else
 	echo "This script is programmed to use two files in order 
@@ -114,11 +120,11 @@ else
 	if [ -f "$1" ]
 	then
 		echo "Name : $1"
-		echo "Permissions : $(stat --format="%A" $1)"
-		echo "Type: $(stat --format="%F" $1)"
-		echo "Owner: $(stat --format="%U" $1)"
-		echo "Group: $(stat --format="%G" $1)"
-		echo "Size: $(stat --format="%s" $1)"
+		echo "Permissions : $(stat --printf="%A" $1)"
+		echo "Type: $(stat --printf="%F" $1)"
+		echo "Owner: $(stat --printf="%U" $1)"
+		echo "Group: $(stat --printf="%G" $1)"
+		echo "Size: $(stat --printf="%s" $1)"
 	else
 		echo "File does not exsist"
 	fi
@@ -258,7 +264,7 @@ fi
 			>> -f : print n or nth field(s) in the result after cut  
 
 > *find* : find command searches for a file in directory hierarchy  
- 			>> -inum : looks for file(s) with index number passwd as argument   
+ 			>> -inum : looks for file(s) with index number passed as argument   
  			>> -type : look for file(s) of specific type ("l" for Symbolic link)  
  			>> -ls : list the files found in output similar to ```ls -dils```  
 
@@ -576,3 +582,4 @@ echo "File Folded!"
 
 > *cut* : removes sections from each line of the file   
 			>> -c : select only these characters  
+
