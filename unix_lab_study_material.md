@@ -63,7 +63,8 @@ fi
 
 ######OUTPUT:
 ```
-nanmolrao@aloo:~/mca_1_unix_lab$ sh script_1b.sh oxford/engineering/mca/2020/Sem1
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_1b.sh 
+	oxford/engineering/mca/2020/Sem1
 mkdir: created directory 'oxford'
 mkdir: created directory 'oxford/engineering'
 mkdir: created directory 'oxford/engineering/mca'
@@ -104,7 +105,8 @@ fi
 
 ######OUTPUT:
 ```
-nanmolrao@aloo:~/mca_1_unix_lab$ sh script_2a.sh script_1a.sh UnixLabSyllabus.pdf 
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_2a.sh script_1a.sh 
+	UnixLabSyllabus.pdf 
 The given files have different permissions
 script_1a.sh : -rwxrwxr-x
 UnixLabSyllabus.pdf : -rw-rw-r--
@@ -473,8 +475,6 @@ done
 			>> -w : Select only those lines containing matches that form whole words.  
 
 ######OUTPUT:
-```
-
 
 **6b. Write a shell script to list all the files in a directory whose filename is at least 10 characters. (use expr command to check the length).**
 
@@ -499,7 +499,38 @@ done
 > *awk* : pattern scanning and processing language
 
 > *expr* : evaluate expressions
-			>> length : computes the length of the argument
+			>> length : computes the length of the argument   
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_6b.sh
+Current Directory: /home/nanmolrao/mca_1_unix_lab
+All files whose filename is at least 10 characters: 
+littleWords
+script_10a.awk
+script_1a.sh
+script_1b.sh
+script_2a.sh
+script_2b.sh
+script_3a.sh
+script_3b.sh
+script_4a.sh
+script_4b.sh
+script_5a.sh
+script_5b.sh
+script_6a.sh
+script_6b.sh
+script_7a.sh
+script_7b.sh
+script_8a.sh
+script_8b.sh
+script_9a.sh
+script_9b.sh
+unix_lab_study_material.md
+UnixLabSyllabus.pdf
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
+
 
 **7a.Write a shell script that gets executed and displays the message either “Good Morning” or “Good Afternoon” or “Good Evening” depending upon time at which the user logs in.**
 
@@ -521,26 +552,34 @@ fi
 
 ######COMMAND DETAILS:
 > *date* : print or set the system date and time   
-			>> %H : Time in 24H format  
+			>> %H : Time in 24H format    
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_7a.sh 
+Good Night!
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
+
 
 **7b.Write a shell script that accepts a list of filenames as its argument, count and
 report occurrence of each word that is present in the first argument file on other argument files.**
 
 ```
-if [ $# -ne 2 ]
+if [ $# -lt 2 ]
 then
-	echo "This script takes in two filenames as arguements"
-	exit
+        echo "This script takes in two filenames as arguements"
+        exit
 else
-	string1=`cat $1 | tr '\n' ' '`
-	for ((i=2; i<=$#; i++))
-	do
-		echo "Filename: ${!i}"
-		for a in $string1
-		do
-			echo "$a: `grep -c "$a" "${!i}"`"
-		done
-	done
+        string1=`cat $1 | tr '\n' ' '`
+        for (( i=2; i<=$#; i++ ))
+        do
+                echo "Filename: ${!i}"
+                for a in $string1
+                do
+                        echo "$a: `grep -c "$a" "${!i}"`"
+                done
+        done
 fi
 ```
 
@@ -551,6 +590,34 @@ fi
 
 > *grep* : print lines that match a given pattern  
 			>> -c : Suppress  normal  output;  instead  print  a  count of matching lines for each input file.
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ ./script_7b.sh words words2 littleWords 
+Filename: words2
+act: 8
+action: 2
+activity: 2
+actually: 2
+add: 4
+address: 2
+administration: 2
+admit: 2
+adult: 2
+affect: 2
+Filename: littleWords
+act: 0
+action: 0
+activity: 0
+actually: 0
+add: 0
+address: 0
+administration: 0
+admit: 0
+adult: 0
+affect: 0
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
 
 **8a. Write a shell script that determine the period for which as specified user is working on a system and display appropriate message.**
 
