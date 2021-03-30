@@ -950,6 +950,17 @@ nanmolrao@aloo:~/mca_1_unix_lab$
 
 ######OUTPUT:
 ```
+nanmolrao@aloo:~/mca_1_unix_lab$ awk -f script_10a.awk
+30-03-2021
+Mar
+30
+2021
+nanmolrao@aloo:~/mca_1_unix_lab$
+```
+
+**10b. Write an awkscript to delete duplicated line from a text file. The order of the original lines must remain unchanged**
+
+```
 
 
 
