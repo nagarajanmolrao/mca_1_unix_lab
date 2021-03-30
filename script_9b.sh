@@ -1,33 +1,17 @@
 #!/bin/bash
-
-echo "Enter the filename:"
-read fn
-if [ ! -f "$fn" ]
+if [ $# -ne 1 ]
 then
-	echo "Invalid Filename!"
-	exit
-fi
-
-for line in `cat $fn`
-do
-	length=$(echo $line|wc -c)
-	length=$(($length-1))
-	s=1;e=40
-	if [ $length -gt 40 ]
+	echo "This script takes in only one filename as arguement!"
+	exit 1
+else
+	if [ -f $1 ]
 	then
-		while [ $length -gt 40 ]
-		do
-			echo -e "$(echo $line| cut -c $s-$e) /"
-			s=$(($e+1))
-			e=$(($e+40))
-			length=$(($length-40))
-		done
-		echo "$(echo $line | cut -c $s- )"
+		echo  "**ORIGINAL FILE**"
+		cat $1
+		printf "\n"
+		echo "**FOLDED FILE**"
+		fold -s -w 40 $1 | sed 's/$/\//'
 	else
-		echo $line
+		echo "file doesn't exist"
 	fi
-done
-echo "File Folded!"
-
-
-
+fi
