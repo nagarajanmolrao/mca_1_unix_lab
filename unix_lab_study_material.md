@@ -726,7 +726,15 @@ fi
 
 > *date* : print or set the system date and time   
 			>> %s : seconds since 1970-01-01
-			>> -d : display time described by STRING argument   
+			>> -d : display time described by STRING argument    
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_8a.sh nanmolrao
+Active Session Time: 00 days 00 hours 37 mins 41 secs
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
+
 
 **8b. Write a shell script that reports the logging on of as specified user within one minute after he/she login. The script automatically terminates if specified user does not login during specified in period of time.**
 
@@ -762,6 +770,16 @@ fi
 			>> -s : Suppress error messages about nonexistent or unreadable files
 			>> -w : Select only those lines containing matches that form whole words   
 
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_8b.sh root
+#login as root user in other terminal
+root     pts/2        2021-03-30 06:41 (192.168.1.36)
+User root logged in !
+nanmolrao@aloo:~/mca_1_unix_lab$
+```
+
+
 **9a. Write a shell script that accepts the filename, starting and ending line number
 as an argument and display all the lines between the given line number.**
 
@@ -787,6 +805,17 @@ fi
 > *sed* : stream editor for filtering and transforming text   
 			>> -n : suppress automatic printing of pattern space
 			>> p : print only specific lines based on the line number or pattern matches  
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_9a.sh fileForScript 3 7
+In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.
+Ultimately, a paragraph is a sentence or group of sentences that support one main idea.
+Paragraphs are the building blocks of papers. 
+Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc.
+In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.
+nanmolrao@aloo:~/mca_1_unix_lab$
+```
 
 **9b. Write a shell script that folds long lines into 40 columns. Thus any line that
 exceeds 40 characters must be broken after 40th, a “/” is to be appended as the indication of folding and processing is to be continued with the residue. The input is to be supplied through a text file created by the user.**
@@ -830,5 +859,40 @@ echo "File Folded!"
 
 > *cut* : removes sections from each line of the file   
 			>> -c : select only these characters  
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_9b.sh fileForScript 
+**ORIGINAL FILE**
+Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc.In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.Ultimately, a paragraph is a sentence or group of sentences that support one main idea.
+Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc.In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.A paragraph is defined as “a group of sentences or a single sentence that forms a unit”.
+
+**FOLDED FILE**
+Paragraphs are the building blocks of /
+papers. Many students define paragraphs /
+in terms of length: a paragraph is a /
+group of at least five sentences, a /
+paragraph is half a page long, etc.In /
+reality, though, the unity and /
+coherence of ideas among sentences is /
+what constitutes a /
+paragraph.Ultimately, a paragraph is a /
+sentence or group of sentences that /
+support one main idea./
+Paragraphs are the building blocks of /
+papers. Many students define paragraphs /
+in terms of length: a paragraph is a /
+group of at least five sentences, a /
+paragraph is half a page long, etc.In /
+reality, though, the unity and /
+coherence of ideas among sentences is /
+what constitutes a paragraph.A /
+paragraph is defined as “a group of /
+sentences or a single sentence that /
+forms a unit”./
+nanmolrao@aloo:~/mca_1_unix_lab$
+```
+
+
 
 
