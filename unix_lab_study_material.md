@@ -808,7 +808,7 @@ fi
 
 ######OUTPUT:
 ```
-nanmolrao@aloo:~/mca_1_unix_lab$ sh script_9a.sh fileFor10b 3 7
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_9a.sh fileForScript 3 7
 In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.
 Ultimately, a paragraph is a sentence or group of sentences that support one main idea.
 Paragraphs are the building blocks of papers. 
@@ -862,6 +862,37 @@ echo "File Folded!"
 
 ######OUTPUT:
 ```
+nanmolrao@aloo:~/mca_1_unix_lab$ sh script_9b.sh fileForScript 
+**ORIGINAL FILE**
+Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc.In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.Ultimately, a paragraph is a sentence or group of sentences that support one main idea.
+Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc.In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.A paragraph is defined as “a group of sentences or a single sentence that forms a unit”.
+
+**FOLDED FILE**
+Paragraphs are the building blocks of /
+papers. Many students define paragraphs /
+in terms of length: a paragraph is a /
+group of at least five sentences, a /
+paragraph is half a page long, etc.In /
+reality, though, the unity and /
+coherence of ideas among sentences is /
+what constitutes a /
+paragraph.Ultimately, a paragraph is a /
+sentence or group of sentences that /
+support one main idea./
+Paragraphs are the building blocks of /
+papers. Many students define paragraphs /
+in terms of length: a paragraph is a /
+group of at least five sentences, a /
+paragraph is half a page long, etc.In /
+reality, though, the unity and /
+coherence of ideas among sentences is /
+what constitutes a paragraph.A /
+paragraph is defined as “a group of /
+sentences or a single sentence that /
+forms a unit”./
+nanmolrao@aloo:~/mca_1_unix_lab$
+```
+
 
 
 
