@@ -961,7 +961,173 @@ nanmolrao@aloo:~/mca_1_unix_lab$
 **10b. Write an awkscript to delete duplicated line from a text file. The order of the original lines must remain unchanged**
 
 ```
+BEGIN{
+	printf("\nOriginal FIle\n")
+	i=1
+}
+{
+	print $0
+	line[i++]=$0
+}
+END{
+	for(j=1; j<i; j++)
+	{
+		for(k=j+1; k<i; k++)
+		{
+			if (line[j]==line[k])
+			{
+				line[k]=""
+			}
+		}
+	}
+	printf("\n The file after deleting duplicate lines\n")
+	for(k=1; k<i; k++)
+	{
+		if(line[k]!="")
+			printf("\n"line[k])
+	}
+	printf("\n")
+}
+```
 
+######AWK COMMAND DETAILS:
+> *BEGIN* pattern : means that Awk will execute the action(s) specified in BEGIN once before any input lines are read.  
+> *END* pattern : means that Awk will execute the action(s) specified in END before it actually exits.   
 
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ awk -f script_10b.awk fileFor10b 
+
+Original File
+Paragraphs are the building blocks of papers.
+Paragraphs can be defined as a collection of well defined sentences
+Paragraphs are the building blocks of papers.
+Paragraphs can be defined as a collection of well defined sentences
+A paragraph is a group of sentences that forms a unit
+
+ The file after deleting duplicate lines
+
+Paragraphs are the building blocks of papers.
+Paragraphs can be defined as a collection of well defined sentences
+A paragraph is a group of sentences that forms a unit
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
+
+**11a. Write an awk script to find out total number of books sold in each discipline as well as total book sold using associate array down table as given below :
+Electrical 34
+Mechanical 67
+Electrical 80
+Computer Science 43
+Civil 98
+Mechanical 65
+Computer Science 64***
+
+```
+BEGIN{
+	print "Total number of books sold in each category"
+}
+{
+	books[$1]+=$2
+}
+END{
+	for(item in books)
+	{
+		printf("\t%-17s %1s %-5d \n", item, "=", books[item])
+		total+=books[item]
+	}
+	printf("%-17s %1s %-5d \n","Total Books Sold ", "=", total)
+}
+```
+
+######AWK COMMAN DETAILS:
+> *BEGIN* pattern : means that Awk will execute the action(s) specified in BEGIN once before any input lines are read.  
+> *END* pattern : means that Awk will execute the action(s) specified in END before it actually exits.
+> *%-#s* format specifier : "#" denotes the field width, "-" denotes that the printing must be left aligned, "s" specifies that the value is string
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ awk -f script_11a.awk 
+Total number of books sold in each category
+Electrical 34
+Mechanical 67
+Electrical 80
+ComputerScience 43
+Civil 98
+Mechanical 65
+ComputerScience 64
+#Press (^D) to complete input
+	Civil             = 98    
+	Mechanical        = 132   
+	ComputerScience   = 107   
+	Electrical        = 114   
+Total Books Sold  = 451   
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
+
+**11b. Write an awkscript to compute gross salary of an employee accordingly to rule
+given below.
+If basic salary < 10000 then HRA=15% of basic & DA=45% of basic.
+If basic salary is >=1000 then HRA=20% of basic & DA=50% of basic.***
+
+```
+BEGIN { 
+	FS=":"
+	printf("\n\t\tsalary statement of employees for the month\n")
+	printf("sl.no\tname\t\tdesignation\tBASIC\tDA\tHRA\tGROSS\n")
+	print
+}
+{
+	slno++; basic_tot+=$5;
+	if ( $5 >= 10000 )
+	{
+		da=0.45*$5; da_tot+=da;
+		hra=0.15*$5;hra_tot+=hra;
+	}
+	else
+       	{ 
+		da=0.50*$5;da_tot+=da;
+		hra=0.20*$5;hra_tot+=hra;
+	}
+		sal_tot+=$5 + da + hra
+		printf("%2d\t%-15s %12-s %8d %8.2f %8.2f %8.2f\n",slno,$2,
+			$3,$5,da,hra,$5+da+hra)
+}
+END{
+	printf( "\n\ttotal basic paid is : rs " basic_tot)
+	printf( "\n\ttotal da paid is : rs " da_tot)
+	printf( "\n\ttotal hra paid is : rs " hra_tot)
+	printf( "\ntotal salary paid is : rs " sal_tot)
+	printf("\n")
+}
+```
+
+######AWK COMMAN DETAILS:
+> *BEGIN* pattern : means that Awk will execute the action(s) specified in BEGIN once before any input lines are read.  
+> *END* pattern : means that Awk will execute the action(s) specified in END before it actually exits.
+> *%-#s* format specifier : "#" denotes the field width, "-" denotes that the printing must be left aligned, "s" specifies that the value is string
+
+######OUTPUT:
+```
+nanmolrao@aloo:~/mca_1_unix_lab$ cat 11b_data 
+mca901:anmol:Prof.:21/8/1999:60000
+mca902:snegha:A.Prof:19/8/1999:40000
+mca903:ramya:A.Prof:9/8/1999:28000
+mca904:sachin:A.Prof:27/6/1999:20000
+nanmolrao@aloo:~/mca_1_unix_lab$ awk -f script_11b.awk 11b_data 
+
+		salary statement of employees for the month
+sl.no	name		designation	    BASIC	 DA	      HRA	GROSS
+
+ 1	anmol           Prof.           60000 27000.00  9000.00 96000.00
+ 2	snegha          A.Prof          40000 18000.00  6000.00 64000.00
+ 3	ramya           A.Prof          28000 12600.00  4200.00 44800.00
+ 4	sachin          A.Prof          20000  9000.00  3000.00 32000.00
+
+	total basic paid is : rs 148000
+	total da paid is : rs 66600
+	total hra paid is : rs 22200
+total salary paid is : rs 236800
+nanmolrao@aloo:~/mca_1_unix_lab$ 
+```
 
 
