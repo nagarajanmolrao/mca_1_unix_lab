@@ -821,51 +821,51 @@ nanmolrao@aloo:~/mca_1_unix_lab$
 exceeds 40 characters must be broken after 40th, a “/” is to be appended as the indication of folding and processing is to be continued with the residue. The input is to be supplied through a text file created by the user.**
 
 ```
-echo "Enter the filename:"
-read fn
-if [ ! -f "$fn" ]
+if [ $# -ne 1 ]
 then
-	echo "Invalid Filename!"
-	exit
-fi
-
-for line in `cat $fn`
-do
-	length=$(echo $line|wc -c)
-	length=$(($length-1))
-	s=1;e=40
-	if [ $length -gt 40 ]
+	echo "This script takes in only one filename as arguement!"
+	exit 1
+else
+	if [ -f $1 ]
 	then
-		while [ $length -gt 40 ]
-		do
-			echo -e "$(echo $line| cut -c $s-$e) /"
-			s=$(($e+1))
-			e=$(($e+40))
-			length=$(($length-40))
-		done
-		echo "$(echo $line | cut -c $s- )"
+		echo  "**ORIGINAL FILE**"
+		cat $1
+		printf "\n"
+		echo "**FOLDED FILE**"
+		fold -s -w 40 $1 | sed 's/$/\//'
 	else
-		echo $line
+		echo "file doesn't exist"
 	fi
-done
-echo "File Folded!"
+fi
 ```
 
 ######COMMAND DETAILS:
-> *cat* :  concatenate files and print on the standard output
+> *fold* :  wrap each input line to fit in specified width
+			>> -s : break at spaces   
+			>> -w : width of columns
 
-> *wc* : print newline, word, and byte counts for each file   
-			>> -c : print the byte counts
+> *sed* : stream editor for filtering and transforming text   
+			>> s/regexp/replacement/ : search and attempt to match the given regular expression against the pattern space and If search is successful, replace the portion matched with the replacement.  
+			>> '$' : Regex pattern representing End of Line  
+			>> '/\' : Escape Character for BackwardSlash (\)
 
-> *cut* : removes sections from each line of the file   
-			>> -c : select only these characters  
 
 ######OUTPUT:
 ```
 nanmolrao@aloo:~/mca_1_unix_lab$ sh script_9b.sh fileForScript 
 **ORIGINAL FILE**
-Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc.In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.Ultimately, a paragraph is a sentence or group of sentences that support one main idea.
-Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc.In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph.A paragraph is defined as “a group of sentences or a single sentence that forms a unit”.
+Paragraphs are the building blocks of papers. Many students 
+define paragraphs in terms of length: a paragraph is a group 
+of at least five sentences, a paragraph is half a page long, etc.
+In reality, though, the unity and coherence of ideas among sentences 
+is what constitutes a paragraph.Ultimately, a paragraph is a sentence 
+or group of sentences that support one main idea.
+Paragraphs are the building blocks of papers. Many students define 
+paragraphs in terms of length: a paragraph is a group of at least 
+five sentences, a paragraph is half a page long, etc.In reality, though, the unity 
+and coherence of ideas among sentences is what constitutes 
+a paragraph.A paragraph is defined as “a group of sentences or 
+a single sentence that forms a unit”.
 
 **FOLDED FILE**
 Paragraphs are the building blocks of /
@@ -891,6 +891,64 @@ paragraph is defined as “a group of /
 sentences or a single sentence that /
 forms a unit”./
 nanmolrao@aloo:~/mca_1_unix_lab$
+```
+
+**10a.Write an awkscript that accepts date argument in the form of dd-mm-yy and display it in the form month, day and year. The script should check the validity of the argument and in the case of error, display a suitable message.**
+
+```
+{
+	split( $0, inpt, "-")
+	if ((inpt[1] < 1) || (inpt[1] > 31) || (inpt[2] < 1) || (inpt[2] > 12))
+	{
+		print "Invalid Date!"
+		exit 0
+	}
+	else
+	{
+		switch (inpt[2])
+		{
+			case 1: print "Jan"
+				break
+			case 2: print "Feb"
+				break
+			case 3: print "Mar"
+				break
+			case 4: print "Apr"
+				break
+			case 5: print "May"
+				break
+			case 6: print "Jun"
+				break
+			case 7: print "Jul"
+				break
+			case 8: print "Aug"
+				break
+			case 9: print "Sep"
+				break
+			case 10: print "Oct"
+				break
+			case 11: print "Nov"
+				break
+			case 12: print "Dec"
+				break
+		}
+		print inpt[1]
+		print inpt[3]
+		exit 0
+	}
+}
+```
+
+######AWK COMMAND DETAILS:
+> *split* : function in order to create array according to given delimiter 
+			>> split(SOURCE,DESTINATION,DELIMITER)   
+			>> SOURCE is the text we will parse  
+			>> DESTINATION is the variable where parsed values will be put   
+			>> DELIMITER is the sign which will delimit  
+
+> *switch* : allows the evaluation of an expression and the execution of statements based on a case match.
+
+######OUTPUT:
 ```
 
 
