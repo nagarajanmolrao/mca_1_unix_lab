@@ -10,6 +10,7 @@ then
 		largeFile=$(find $1 -printf '%k %p\n' | sort -nr | head -n 1 | 
 			cut -d " " -f 2)
 		echo "Larget File in the directory: $largeFile"
+		echo "Size: $(stat --printf="%s" $largeFile)"
 
 	else
 		echo "Path does not exist! Please check the path."
@@ -41,6 +42,7 @@ fi
 nanmolrao@aloo:~/mca_1_unix_lab$ sh script_1a.sh ~/mca_1_unix_lab/
 Larget File in the directory: /home/nanmolrao/mca_1_unix_lab/
 		unix_lab_study_material.md
+Size: 34562
 nanmolrao@aloo:~/mca_1_unix_lab$
 ```
 
@@ -588,13 +590,13 @@ nanmolrao@aloo:~/mca_1_unix_lab$
 
 ```
 currentTime=$(date +"%H")
-if [[ $currentTime -ge 00 && $currentTime -le 11 ]]
+if [ $currentTime -ge 00 ] && [ $currentTime -le 11 ]
 then
 	echo "Good Morning!"
-elif [[ $currentTime -ge 12 && $currentTime -le 14 ]]
+elif [ $currentTime -ge 12 ] && [ $currentTime -le 14 ]
 then
 	echo "Good Afternoon!"
-elif [[ $currentTime -ge 15 && $currentTime -le 18 ]]
+elif [ $currentTime -ge 15 ] && [ $currentTime -le 18 ]
 then
 	echo "Good Evening!"
 else
@@ -1129,6 +1131,7 @@ sl.no	name		designation	    BASIC	 DA	      HRA	GROSS
 total salary paid is : rs 236800
 nanmolrao@aloo:~/mca_1_unix_lab$ 
 ```
+
 
 
 
